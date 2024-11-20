@@ -1,23 +1,44 @@
 package math
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestAbs(t *testing.T) {
-	type args[T interface{ constraints.Integer | constraints.Integer }] struct {
-		val T
+	var tests = []struct {
+		name  string
+		input int
+		want  int
+	}{
+		{"Abs of -2 should be 2", -2, 2},
+		{"Abs of 2 should be 2", 2, 2},
+		{"Abs of 0 should be 0", -0, 0},
 	}
-	type testCase[T interface{ constraints.Integer | constraints.Integer }] struct {
-		name string
-		args args[T]
-		want T
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			ans := Abs(test.input)
+			if ans != test.want {
+				t.Errorf("got %d, want %d", ans, test.want)
+			}
+		})
 	}
-	tests := []testCase[ /* TODO: Insert concrete types here */ ]{
-		// TODO: Add test cases.
+
+	var testFloats = []struct {
+		name  string
+		input float64
+		want  float64
+	}{
+		{"Abs of -8.345 should be 8.345", -8.345, 8.345},
+		{"Abs of 9 should be 9", 9, 9},
+		{"Abs of 0 should be 0", 0, 0},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Abs(tt.args.val); got != tt.want {
-				t.Errorf("Abs() = %v, want %v", got, tt.want)
+
+	for _, test := range testFloats {
+		t.Run(test.name, func(t *testing.T) {
+			ans := Abs(test.input)
+			if ans != test.want {
+				t.Errorf("got %f, want %f", ans, test.want)
 			}
 		})
 	}
