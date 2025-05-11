@@ -2,6 +2,7 @@ package cmath
 
 import (
 	"golang.org/x/exp/constraints"
+	"iter"
 	"testing"
 )
 
@@ -68,6 +69,7 @@ func TestPercentageOf(t *testing.T) {
 		{"test4", args[float64]{7, 0}, 0},
 		{"test5", args[float64]{0, 0}, 0},
 		{"test6", args[float64]{2.5, 68.65}, 1.7162500000000003},
+		{"test7", args[float64]{10, 3.6872}, 0},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -91,5 +93,60 @@ func TestPercentageOf(t *testing.T) {
 				t.Errorf("PercentageOf() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestInts(t *testing.T) {
+	i := 2
+	for next, stop := iter.Pull(Ints(i, 5)); i <= 5; i++ {
+		if val, ok := next(); !ok {
+			stop()
+			break
+		} else {
+			t.Log("TestInts: (2,5):", val)
+			if val != i {
+				t.Errorf("got = %v, expected %v", val, i)
+			}
+		}
+	}
+
+	i = 7
+	for next, stop := iter.Pull(Ints(i, 2)); i >= 2; i-- {
+		if val, ok := next(); !ok {
+			stop()
+			break
+		} else {
+			t.Log("TestInts: (7,2):", val)
+			if val != i {
+				t.Errorf("got = %v, expected %v", val, i)
+			}
+		}
+	}
+
+	i = 3
+	for next, stop := iter.Pull(Ints(i, i)); i >= 3; i++ {
+		if val, ok := next(); !ok {
+			stop()
+			break
+		} else {
+			t.Log("TestInts: (3,3):", val)
+			if val != i {
+				t.Log("val:", val)
+				t.Errorf("got = %v, expected %v", val, i)
+			}
+		}
+	}
+
+	i = -5
+	for next, stop := iter.Pull(Ints(i, 5)); i <= 5; i++ {
+		if val, ok := next(); !ok {
+			stop()
+			break
+		} else {
+			t.Log("TestInts: (-5,5):", val)
+			if val != i {
+				t.Errorf("got = %v, expected %v", val, i)
+			}
+		}
 	}
 }
