@@ -9,7 +9,7 @@ package arrays
 // Example:
 //
 //	s := Of(1, 2, 3)  // []int{1, 2, 3}
-func Of[T comparable](elems ...T) []T {
+func Of[T any](elems ...T) []T {
 	return elems
 }
 
@@ -21,7 +21,7 @@ func Of[T comparable](elems ...T) []T {
 //
 //	original := []string{"a", "b", "c"}
 //	copy := CopyOf(original...)  // modifies 'copy' without affecting 'original'
-func CopyOf[T comparable](elems ...T) []T {
+func CopyOf[T any](elems ...T) []T {
 	cp := make([]T, len(elems))
 	copy(cp, elems)
 	return cp
