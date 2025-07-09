@@ -26,3 +26,17 @@ func CopyOf[T any](elems ...T) []T {
 	copy(cp, elems)
 	return cp
 }
+
+// Fill assigns the specified value to each element of the specified slice.
+//
+// Example:
+// slice1 := make([]int, 4) // slice1 = [0,0,0,0]
+// slice1 = Fill(slice1, 123) // slice1 = [123,123,123,123]
+//
+// This function modifies the given slice, so need not reassign the returned slice.
+func Fill[T any](a []T, value T) []T {
+	for i, _ := range a {
+		a[i] = value
+	}
+	return a
+}
